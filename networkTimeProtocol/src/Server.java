@@ -1,6 +1,5 @@
 import java.io.*;
 import java.net.*;
-import java.util.concurrent.TimeUnit;
 
 public class Server{
     static void prepareScreen() {
@@ -50,27 +49,30 @@ class ServerThread extends Thread {
         String message = "";
         String clientIp = "";
         String clientPort = "";
+        long t2 = 0;
         try {
             InputStream input = socket.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
- 
             OutputStream output = socket.getOutputStream();
             PrintWriter writer = new PrintWriter(output, true);
 
+            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
             message = reader.readLine();
             
-            System.out.println("Offset of " + socket.getRemoteSocketAddress().toString() + " " + message);
-            try {
-                clientIp = socket.getRemoteSocketAddress().toString().split(":")[0];
-                clientPort = socket.getRemoteSocketAddress().toString().split(":")[1];
+            // currentTime = System.currentTimeMillis();
+            
+            clientIp = socket.getRemoteSocketAddress().toString().split(":")[0];
+            clientPort = socket.getRemoteSocketAddress().toString().split(":")[1];
 
-                writer.println("Connection established.");
-                writer.println("Your IP is " + clientIp + " and port is " + clientPort);               
-                writer.println("Offset calculating");
-                TimeUnit.SECONDS.sleep(5);
-                writer.println("Offset founded");
-            } catch (InterruptedException e) {
-                System.out.println("got interrupted!");
+            writer.println("Connection established.");
+            writer.println("Your IP is " + clientIp + " and port is " + clientPort);               
+            writer.println("NTP started");
+
+            writer.println("READY");
+            while (true) {
+                message = reader.readLine();
+                t2 = System.currentTimeMillis();
+                if(message == "bye") break;
+                writer.println(t2 + " " + System.currentTimeMillis());
             }
             writer.println("bye");
             System.out.println("Close message send to " + socket.getRemoteSocketAddress().toString());
@@ -88,5 +90,3 @@ class ServerThread extends Thread {
         }
     }
 }
-
-
