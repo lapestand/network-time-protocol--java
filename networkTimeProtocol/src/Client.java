@@ -114,6 +114,7 @@ public class Client {
             System.out.println("New Local Timestamp: " + (cur_time + theta));
 
             System.out.println("Difference between new & old timestamp: " + theta);
+            System.out.println("Difference between offset & theta: " + (Math.abs(offsetValue - theta)));
 
             clientSocket.close();
         } catch (UnknownHostException ex) {
