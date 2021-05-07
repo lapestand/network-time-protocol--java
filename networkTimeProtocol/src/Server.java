@@ -21,7 +21,7 @@ public class Server{
             while (true) {
                 try {
                     Socket socket = serverSocket.accept();
-                    System.out.println("New client connected. IP: " + socket.getRemoteSocketAddress().toString());
+                    System.out.println("New client connected. IP: " + socket.getRemoteSocketAddress().toString().split("/")[1]);
                     new ServerThread(socket).start();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -59,9 +59,11 @@ class ServerThread extends Thread {
             message = reader.readLine();
             
             // currentTime = System.currentTimeMillis();
+
+            String clientAddr = new String(socket.getRemoteSocketAddress().toString().split("/")[1]);
             
-            clientIp = socket.getRemoteSocketAddress().toString().split(":")[0];
-            clientPort = socket.getRemoteSocketAddress().toString().split(":")[1];
+            clientIp = clientAddr.split(":")[0];
+            clientPort = clientAddr.split(":")[1];
 
             writer.println("Connection established.");
             writer.println("Your IP is " + clientIp + " and port is " + clientPort);               
@@ -71,11 +73,11 @@ class ServerThread extends Thread {
             while (true) {
                 message = reader.readLine();
                 t2 = System.currentTimeMillis();
-                if(message == "bye") break;
+                if(message.equals("bye")) break;
                 writer.println(t2 + " " + System.currentTimeMillis());
             }
             writer.println("bye");
-            System.out.println("Close message send to " + socket.getRemoteSocketAddress().toString());
+            System.out.println("Close message send to " + socket.getRemoteSocketAddress().toString().split("/")[1]);
             output.close();
             writer.close();
             socket.close();
