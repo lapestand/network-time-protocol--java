@@ -2,20 +2,17 @@
 
 network-time-protocol-java is Java program which simulates network time protocol.
 
-## Installation
+Contributors:
 
-Clone the [repository](https://github.com/lapestand/network-time-protocol-java) to install.
-
-```bash
-git clone https://github.com/lapestand/network-time-protocol-java.git
-```
+İzzet YILMAZ - 160101021
+Ahmet Emin Yelken - 160101009
 
 ## Usage
 
 ### Server
 
 ```bash
-java -cp . Server <port number>
+java -cp . networkTimeProtocol.Server <port number>
 ```
 
 ### Client
@@ -23,13 +20,5 @@ java -cp . Server <port number>
 For localhost
 
 ```bash
-java -cp . Client <offset value> <ip address>:<port number>
+java -cp . networkTimeProtocol.Client <offset value> <ip address>:<port number>
 ```
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
